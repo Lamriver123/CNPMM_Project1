@@ -1,0 +1,42 @@
+{
+  "name": "bai_tap_2",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec ts-node src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lamriver123/CNPMM_Project1"
+  },
+  "author": "Nguyen Huu Ngoc Lam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lamriver123/CNPMM_Project1/issues"
+  },
+  "homepage": "https://github.com/Lamriver123/CNPMM_Project1#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.3",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "@types/sequelize": "^4.28.20",
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
