@@ -1,0 +1,44 @@
+import { useEffect, useState } from "react";
+import { getUserApi } from "../util/api";
+import { notification, Table } from "antd";
+
+const UserPage = () => {
+    const [dataSource, setDataSource] = useState([]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await getUserApi();
+            console.log("API user response:", res);
+
+            if (res && res.EC === 0 && Array.isArray(res.data)) {
+                setDataSource(res.data); // <-- đúng field
+            } else {
+                notification.error({
+                    message: "Error",
+                    description: res?.EM || "Failed to fetch users",
+                });
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const columns = [
+        { title: "ID", dataIndex: "_id" },
+        { title: "Name", dataIndex: "name" },
+        { title: "Email", dataIndex: "email" },
+        { title: "Role", dataIndex: "role" },
+    ];
+
+    return (
+        <div style={{ padding: 30 }}>
+            <Table
+                bordered
+                dataSource={dataSource}
+                columns={columns}
+                rowKey="_id"
+            />
+        </div>
+    );
+};
+
+export default UserPage;
