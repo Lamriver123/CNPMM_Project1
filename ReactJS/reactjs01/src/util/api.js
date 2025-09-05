@@ -24,7 +24,22 @@ const getUserApi = () => {
     return axios.get(URL_API);
 };
 
+const getProducts = (categoryId = null, page = 1, limit = 5) => {
+  let url = `/v1/api/products?page=${page}&limit=${limit}`;
+  if (categoryId && categoryId !== "all") {
+    url += `&categoryId=${categoryId}`;
+  }
+  return axios.get(url);
+};
+
+
+const getCategories = () => {
+  return axios.get("/v1/api/categories");
+};
+
 export {
+    getCategories,
+    getProducts,
     createUserApi,
     loginApi,
     getUserApi

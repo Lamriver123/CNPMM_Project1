@@ -5,10 +5,20 @@ const {
   getUser,
   getAccount,
 } = require("../controllers/userController");
+
+const productController = require("../controllers/productController");
+const categoryController = require("../controllers/categoryController");
 const auth = require("../middlewares/auth");
 const delay = require("../middlewares/delay");
 
 const routerAPI = express.Router();
+
+// API products (lazy loading)
+routerAPI.get('/products', productController.getProducts);
+
+// API categories
+routerAPI.get('/categories', categoryController.getCategories);
+
 
 // middleware auth cho tất cả API trừ auth endpoints
 routerAPI.use(auth);

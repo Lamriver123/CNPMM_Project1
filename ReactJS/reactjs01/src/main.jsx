@@ -7,6 +7,8 @@ import { HomePage } from "./pages/home.jsx";
 import UserPage from "./pages/user.jsx";
 import RegisterPage from "./pages/register.jsx";
 import LoginPage from "./pages/login.jsx";
+import { ProductPage } from "./pages/products.jsx";
+
 import { AuthWrapper } from "./components/context/auth.context.jsx";
 
 const router = createBrowserRouter([
@@ -19,9 +21,14 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: "products",
+        element: <ProductPage />
+      },
+      {
         path: "user",
         element: <UserPage />,
       },
+
     ],
   },
   {
