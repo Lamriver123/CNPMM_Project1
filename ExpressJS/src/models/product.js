@@ -12,10 +12,13 @@ const productSchema = new mongoose.Schema(
     },
     description: { type: String },
     images: { type: String },
+
+    discount: { type: Number, default: 0 },   // % khuyến mãi
+    views: { type: Number, default: 0 },      // lượt xem
+    rating: { type: Number, default: 0 },     // điểm đánh giá trung bình
+    sold: { type: Number, default: 0 },       // số lượng đã bán
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default mongoose.model("Product", productSchema);

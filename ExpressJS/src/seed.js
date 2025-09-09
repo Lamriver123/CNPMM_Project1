@@ -34,11 +34,13 @@ const seedData = async () => {
       for (let i = 1; i <= 3; i++) {
         products.push({
           name: `${cat.name} ${i}`,
-          price: Math.floor(Math.random() * 1000) + 100,
-          stock: Math.floor(Math.random() * 50) + 10,
+          price: Math.floor(Math.random() * 1000) + 100,   // giá 100 - 1100
+          stock: Math.floor(Math.random() * 50) + 10,     // tồn kho 10 - 60
           category: cat._id,
           description: `Sản phẩm ${i} thuộc danh mục ${cat.name}`,
           images: "https://via.placeholder.com/200",
+          discount: Math.floor(Math.random() * 50),       // % khuyến mãi (0-50)
+          views: Math.floor(Math.random() * 500),         // lượt xem (0-500)
         });
       }
     });

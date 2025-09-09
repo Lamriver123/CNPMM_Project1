@@ -37,10 +37,17 @@ const getCategories = () => {
   return axios.get("/v1/api/categories");
 };
 
+const filterProducts = (params = {}, page = 1, limit = 5) => {
+  const query = new URLSearchParams(params).toString();
+  return axios.get(`/v1/api/products/filter?page=${page}&limit=${limit}&${query}`);
+};
+
+
 export {
     getCategories,
     getProducts,
     createUserApi,
     loginApi,
-    getUserApi
+    getUserApi,
+    filterProducts
 };

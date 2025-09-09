@@ -1,17 +1,15 @@
-const productService = require('../services/productService');
+import * as productService from "../services/productService.js";
 
 const getProducts = async (req, res) => {
   try {
     const categoryId = req.query.categoryId || null;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 8;
 
     let result;
     if (categoryId && categoryId !== "all") {
-      // Lọc theo category
       result = await productService.getProductsByCategory(categoryId, page, limit);
     } else {
-      // Lấy tất cả
       result = await productService.getAllProducts(page, limit);
     }
 
@@ -25,13 +23,17 @@ const getProducts = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
 
-module.exports = {
-  getProducts,
+const filterProducts = async (req, res) => {
+  try {
+    const result = await productService.getFilteredProductsService(req.query);
+    return res.status(200).json({ success: true, ...result });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
 };
+
+export { getProducts, filterProducts };
