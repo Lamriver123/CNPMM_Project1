@@ -1,0 +1,31 @@
+{
+  "name": "react-cart-library-lamriver123",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.1.12",
+    "@vitejs/plugin-react": "^5.0.2",
+    "rollup": "^4.50.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  }
+}
