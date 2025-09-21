@@ -8,8 +8,11 @@ import UserPage from "./pages/user.jsx";
 import RegisterPage from "./pages/register.jsx";
 import LoginPage from "./pages/login.jsx";
 import { ProductPage } from "./pages/products.jsx";
-
+import { ProductDetailPage } from "./pages/productDetail.jsx";
 import { AuthWrapper } from "./components/context/auth.context.jsx";
+import {  FavoritePage} from "./pages/favorite.jsx";
+import { ViewedPage } from "./pages/viewed.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +31,19 @@ const router = createBrowserRouter([
         path: "user",
         element: <UserPage />,
       },
-
+      {
+        path: "products/:id",
+        element: <ProductDetailPage />
+      }
+      ,{
+        path: "favorite",
+        element: <FavoritePage />
+      },
+      {
+        path: "viewed",
+        element: <ViewedPage />
+      }
+      
     ],
   },
   {

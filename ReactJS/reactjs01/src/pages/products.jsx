@@ -1,10 +1,14 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { getCategories, filterProducts } from "../util/api";
-import { Card, Row, Col, Spin, notification, Select, Input, Button, InputNumber } from "antd";
+import { getCategories, filterProducts,addFavoriteApi, removeFavoriteApi } from "../util/api";
+import { Row, Col, Spin, notification, Select, Input, Button, InputNumber } from "antd";
+import CardProduct from "../components/cards/cardProduct"; // import component mới
+import { useNavigate } from "react-router-dom";
+
 
 const { Option } = Select;
 
 const ProductPage = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -80,6 +84,33 @@ const ProductPage = () => {
     fetchCategories();
   }, []);
 
+  // Handler khi click card => mở chi tiết
+  const handleOpenDetail = (product) => {
+    alert(`Mở chi tiết sản phẩm: ${product.name}`);
+    navigate(`/products/${product._id}`);
+    // hoặc navigate đến trang chi tiết bằng react-router-dom
+    // navigate(`/product/${product._id}`);
+  };
+
+  // Handler thêm/xóa yêu thích
+  const handleToggleFavorite = async (product) => {
+    try {
+      if (!product.isFavorite) {
+        // thêm
+        await addFavoriteApi(product._id);
+        alert(`Đã thêm "${product.name}" vào yêu thích`);
+      } else {
+        // xóa
+        await removeFavoriteApi(product._id);
+        alert(`Đã xóa "${product.name}" khỏi yêu thích`);
+      }
+      // reload lại danh sách sản phẩm
+      fetchProducts(1, false);
+    } catch (err) {
+      alert(`Lỗi yêu thích: ${err.message}`);
+    }
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <h1>Danh sách sản phẩm</h1>
@@ -93,7 +124,9 @@ const ProductPage = () => {
         >
           <Option value="all">Tất cả</Option>
           {categories.map((cat) => (
-            <Option key={cat._id} value={cat._id}>{cat.name}</Option>
+            <Option key={cat._id} value={cat._id}>
+              {cat.name}
+            </Option>
           ))}
         </Select>
 
@@ -123,23 +156,11 @@ const ProductPage = () => {
       <Row gutter={[16, 16]}>
         {products.map((p) => (
           <Col key={p._id} span={6}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt={p.name}
-                  src={p.images || "https://via.placeholder.com/200"}
-                  style={{ height: 200, objectFit: "cover" }}
-                />
-              }
-            >
-              <Card.Meta
-                title={p.name}
-                description={<span style={{ color: "red" }}>{p.price.toLocaleString()} VNĐ</span>}
-              />
-              <p>Tồn kho: {p.stock}</p>
-              <p>Danh mục: {p.category?.name}</p>
-            </Card>
+            <CardProduct
+              product={p}
+              onClick={handleOpenDetail}
+              onToggleFavorite={handleToggleFavorite}
+            />
           </Col>
         ))}
       </Row>

@@ -42,6 +42,39 @@ const filterProducts = (params = {}, page = 1, limit = 5) => {
   return axios.get(`/v1/api/products/filter?page=${page}&limit=${limit}&${query}`);
 };
 
+export const getFavorites = async (page = 1, limit = 4) => {
+  const res = await axios.get(`/v1/api/favorites?page=${page}&limit=${limit}`);
+  return res;
+};
+export const addFavoriteApi = async (productId) => {
+  return await axios.post("/v1/api/favorites", {
+    productId,
+  });
+};
+
+export const removeFavoriteApi = async (productId) => {
+  return await axios.delete("/v1/api/favorites", {
+    data: { productId }, // DELETE phải để body trong data
+  });
+};
+
+export const getProductDetail = async (id) => {
+  const res = await axios.get(`/v1/api/products/${id}`);
+  return res;
+};
+
+export const getSimilarProducts = async (categoryId) => {
+  const res = await axios.get(`/v1/api/products/similar/${categoryId}`);
+  return res;
+};
+
+    
+
+export const getComments = async (productId) => {
+  const res = await axios.get(`/v1/api/reviews/${productId}`);
+  return res;
+};
+
 
 export {
     getCategories,
@@ -49,5 +82,5 @@ export {
     createUserApi,
     loginApi,
     getUserApi,
-    filterProducts
+    filterProducts,
 };

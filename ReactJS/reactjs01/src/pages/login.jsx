@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Divider, Form, Input, notification, Row } from "antd";
 import { loginApi } from "../util/api";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,14 +9,18 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const { setAuth } = useContext(AuthContext);
 
+    const [loading, setLoading] = useState(false);
+
     const onFinish = async (values) => {
         const { email, password } = values;
 
+        setLoading(true);
         const res = await loginApi(email, password);
+        setLoading(false);
         console.log("response: ", res);
 
         if (res && res.EC === 0) {
-            localStorage.setItem("access_token", res.token);
+            localStorage.setItem("access_token", res.access_token);
             // Lưu thông tin user vào localStorage để sử dụng sau này
             localStorage.setItem("user_email", res?.user?.email ?? "");
             localStorage.setItem("user_name", res?.user?.name ?? "");
@@ -86,7 +90,7 @@ const LoginPage = () => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" loading={loading}>
                                 Login
                             </Button>
                         </Form.Item>

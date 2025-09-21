@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema(
     },
     description: { type: String },
     images: { type: String },
-
+    isFavorite: { type: Boolean, default: false }, // dùng để đánh dấu sản phẩm yêu thích
     discount: { type: Number, default: 0 },   // % khuyến mãi
     views: { type: Number, default: 0 },      // lượt xem
     rating: { type: Number, default: 0 },     // điểm đánh giá trung bình

@@ -4,6 +4,8 @@ import {
     HomeOutlined,
     SettingOutlined,
     ShoppingOutlined,
+    HeartOutlined,
+    EyeOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +32,17 @@ const Header = () => {
                     key: "user",
                     icon: <UsergroupAddOutlined />,
                 },
+                {
+                    label: <Link to={"/favorite"}>Favorite</Link>,
+                    key: "favorite",
+                    icon: <HeartOutlined />,
+                },
+                {
+                    label: <Link to={"/viewed"}>Viewed</Link>,
+                    key: "viewed",
+                    icon: <EyeOutlined />,
+                },
+                
             ]
             : []),
 
@@ -50,27 +63,28 @@ const Header = () => {
                 ...(auth.isAuthenticated
                     ? [
                         {
-                            label: (
-                                <span
-                                    onClick={() => {
-                                        localStorage.removeItem("access_token");
-                                        setCurrent("home");
-
-                                        setAuth({
-                                            isAuthenticated: false,
-                                            user: {
-                                                email: "",
-                                                name: "",
-                                            }
-                                        })
-                                        navigate("/");
-                                    }}
-                                >
-                                    Đăng xuất
-                                </span>
-                            ),
+                            label: "Đăng xuất",
                             key: "logout",
-                        },
+                            onClick: () => {
+                                setAuth({
+                                    isAuthenticated: false,
+                                    user: {
+                                        email: "",
+                                        name: "",
+                                    }
+                                });
+
+                                localStorage.removeItem("access_token");
+                                localStorage.removeItem("user_email");
+                                localStorage.removeItem("user_name");
+                                localStorage.clear();
+
+                                console.log("xóa thành công");
+                                setCurrent("home");
+                                navigate("/");
+                            }
+                        }
+
                     ]
                     : [
                         {

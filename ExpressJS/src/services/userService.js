@@ -71,6 +71,7 @@ const loginService = async (email, password) => {
 
     // nếu đúng thì tạo token
     const payload = {
+      userId: user._id,
       email: user.email,
       name: user.name,
       role: user.role,
