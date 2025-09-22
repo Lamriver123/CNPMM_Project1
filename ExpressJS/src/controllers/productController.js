@@ -53,8 +53,10 @@ const filterProducts = async (req, res) => {
 //get product details by id
 const getProductById = async (req, res) => {
   try {
+    const userId = req.user ? req.user.userId : null;
+    
     const productId = req.params.id;
-    const product = await productService.getProductById(productId);
+    const product = await productService.getProductById(productId, userId);
     if (!product) {
       return res.status(404).json({ success: false, message: "Product not found" });
     }

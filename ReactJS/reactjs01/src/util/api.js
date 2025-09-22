@@ -75,6 +75,11 @@ export const getComments = async (productId) => {
   return res;
 };
 
+const getViewed = async (page = 1, limit = 4) => {
+  const res = await axios.get(`/v1/api/viewed?page=${page}&limit=${limit}`);
+  return res;
+}
+
 
 export {
     getCategories,
@@ -83,4 +88,5 @@ export {
     loginApi,
     getUserApi,
     filterProducts,
+    getViewed,
 };

@@ -1,16 +1,26 @@
 const Review = require("../models/review");
 
 const getReviewsByProduct = async (productId) => {
-    try {
+  try {
+    console.log("Fetching reviews for product:", productId);
+
     const reviews = await Review.find({ product: productId })
-        .populate('user', 'username avatar') // Lấy thông tin user (username, avatar)
-        .exec();
-        const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length || 0;
-        return { reviews, averageRating };
-    } catch (error) {
-        throw new Error("Error fetching reviews");
-    }
+      .populate("user", "name avatar") // user có field name + avatar
+      .exec();
+
+    console.log("reviews:", reviews);
+
+    const averageRating =
+      reviews.reduce((acc, review) => acc + review.rating, 0) /
+        (reviews.length || 1);
+
+    return { reviews, averageRating: Number(averageRating.toFixed(1)) };
+  } catch (error) {
+    console.error("getReviewsByProduct error:", error);
+    throw new Error("Error fetching reviews: " + error.message);
+  }
 };
+
 
 
 const addReview = async (userId, productId, rating, comment) => {

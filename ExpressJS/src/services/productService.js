@@ -1,6 +1,7 @@
 import Product from "../models/product.js";
 import ProductUtils from "../utils/productUtils.js";
 import Favorite from "../models/favorite.js";
+import Viewed from "../models/viewed.js";
 import mongoose from "mongoose";
 
 const getProductsByCategory = async (categoryId) => {
@@ -50,12 +51,10 @@ const getFilteredProductsService = async (filters, userId) => {
 
   // đánh dấu sản phẩm yêu thích nếu userId được cung cấp
   if (userId) {
-    console.log(">>> check userId in getFilteredProductsService: ", userId);
     const favorite = await Favorite.findOne({ user: userId }).lean();
     const favoriteProductIds = favorite ? favorite.products.map((id) => id.toString()) : [];
     filteredProducts.forEach((product) => {
       product.isFavorite = favoriteProductIds.includes(product._id.toString());
-      console.log(">>> check product in getFilteredProductsService: ", product);
     });
   }
 
@@ -72,11 +71,29 @@ const getFilteredProductsService = async (filters, userId) => {
   };
 };
 
-const getProductById = async (productId) => {
+const getProductById = async (productId, userId) => {
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     return null;
   }
-  return await Product.findById(productId).populate("category").lean();
+
+  const product = await Product.findById(productId).populate("category").lean();
+
+  if (userId && product) {
+    const viewed = await Viewed.findOne({ user: userId }).lean();
+    if (viewed) {
+      //
+      if (!viewed.products.map((id) => id.toString()).includes(productId)) {
+        viewed.products.push(productId);
+        await Viewed.updateOne({ user: userId }, { products: viewed.products });
+      }
+    }
+    else {
+      await Viewed.create({
+        user: userId, products: [productId]
+      });
+    }
+  }
+  return product;
 };
 
 export { getProductsByCategory, getAllProducts, getFilteredProductsService, getProductById };

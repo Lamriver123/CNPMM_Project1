@@ -34,7 +34,7 @@ routerAPI.get('/categories', categoryController.getCategories);
 routerAPI.get('/products/filter', optionalAuth, productController.filterProducts);
 
 //API product details
-routerAPI.get('/products/:id', productController.getProductById);
+routerAPI.get('/products/:id', optionalAuth, productController.getProductById);
 
 // middleware auth cho tất cả API trừ auth endpoints
 routerAPI.use(auth);

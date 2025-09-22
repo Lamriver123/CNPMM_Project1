@@ -3,7 +3,9 @@ const viewedService = require("../services/viewedService");
 const getViewed = async (req, res) => {
     try {
         console.log(">>> check user in viewedController: ", req.user.userId);
-        const viewed = await viewedService.getViewedByUser(req.user.userId);
+        const limit = parseInt(req.query.limit) || 4;
+        const page = parseInt(req.query.page) || 1;
+        const viewed = await viewedService.getViewedByUser(req.user.userId, page, limit);
         return res.status(200).json({
             success: true,
             data: viewed || { products: [] }  // fallback nếu user chưa có viewed

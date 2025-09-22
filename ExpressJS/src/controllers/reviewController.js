@@ -3,6 +3,7 @@ const reviewService = require("../services/reviewService");
 const getReviewsByProduct = async (req, res) => {
     try {
         const productId = req.params.productId;
+        console.log("Review: ", productId);
         const { reviews, averageRating } = await reviewService.getReviewsByProduct(productId);
         return res.status(200).json({
             success: true,
